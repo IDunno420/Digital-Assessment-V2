@@ -321,7 +321,7 @@ def order_item():
             max_items = 5  # Literals for number of items
             min_items = 1  # *see above
             print ("---------------")  # Aesthetic
-            num_items = int(input("How many items do you want to order?"))  # User infomation
+            num_items = int(input("How many items do you want to order? "))  # User infomation
             value = num_items  # Creates value for the same value as num_items
             if num_items >= min_items and num_items <= max_items:  # Makes it so there is a max of 5 items and a min of 1
                 break  # Breaks loop
@@ -336,7 +336,7 @@ def order_item():
             while True:  # Enters loop
                 try:
                     print ("---------------")
-                    items_ordered = int(input("Please choose your items by entering the number from the menu"))  # Creates items_ordered varible
+                    items_ordered = int(input("Please choose your items by entering the number from the menu "))  # Creates items_ordered varible
                     if items_ordered >= 1 and items_ordered <= 12:  # Makes that it must be 1-12
                         break  # Breaks loop
                     else:  # If not 1-12
@@ -344,9 +344,9 @@ def order_item():
                 except ValueError:  # If input is invalid
                     print ("That was invalid")  # Error messages
                     print ("Your order must be between 1-12")
-            items_ordered = items_ordered-1  #
-            order_list.append(items[items_ordered])
-            order_cost.append(item_prices[items_ordered])
+            items_ordered = items_ordered-1  # Minuses items_ordered to make sure it doesn't infinitly loop
+            order_list.append(items[items_ordered])  # Adds items_ordered to order_list
+            order_cost.append(item_prices[items_ordered])  # Adds items_ordered to order_cost
             print ("{} ${:.2f}".format(items[items_ordered], item_prices[items_ordered]))  # Orders list in 2dp in order of code
             num_items = num_items-1  # Reduces items ordered by 1 to allow to continue
     return value
@@ -376,6 +376,10 @@ def print_order(del_pick, value):
     elif del_pick == "delivery":  # If order is delivery
         print ("Your order is for delivery")  # The below is to print all customer details
         print (f"Customer Name: {customer_details['name']} Customer Phone: {customer_details['phone']} Customer Address:{customer_details['house']}{customer_details['street']}{customer_details['suburb']}")
+        if value <= 4:
+            print ("---------------")
+            print ("A nine dollar shipping cost has been applied due to your order")
+            print ("containing less than or equal to 4 items.")
         print ("---------------")  # Aesthetic
         if value <= 4:  # Adds delivery cost if less than 4 items
             total_cost = total_cost + shipping_cost  # Adds 9 to total cost
@@ -387,6 +391,10 @@ def print_order(del_pick, value):
         print ("---------------")  # Aesthetic
         print ("ordered: {} cost ${:.2f}".format(item, order_cost[count]))  # Displays costs in 2dp along with formating it in item and their cost for that item
         count = count+1  # This is done so the list displays the items in correct order
+    if del_pick == "delivery":
+        if value <= 4:
+            print ("---------------")
+            print ("Added Shipping cost: cost $9.00")
     print ("---------------")  # Aesthetic
     print("total order cost")
     print (f"${total_cost:.2f}")  # Prints the total at 2dp
@@ -450,17 +458,17 @@ def new_exit():
                     print ("╚═╝  ╚═══╝╚══════╝ ╚══╝╚══╝      ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚══════╝╚═╝  ╚═╝")
                     print ("")
                     time.sleep(1)
-                    order_list.clear()
-                    order_cost.clear()
-                    customer_details.clear()
+                    order_list.clear()  # Clears order_list and order_cost so it won't be stored
+                    order_cost.clear()  #
+                    customer_details.clear()  # Clears all customer details e.g. phone, name etc
                     main()  # Reopens the main def so it completely resets with new code
                     break  # Breaks off try accept
                 elif reopen == 2:
                     print ("Thanks for shopping with us!")
-                    order_list.clear()
+                    order_list.clear()  # Same as above
                     order_cost.clear()
                     customer_details.clear()
-                    exit()
+                    exit()  # Closes program
             else:
                 print ("Please enter a 1 or 2")
         except ValueError:
